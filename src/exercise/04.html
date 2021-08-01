@@ -1,15 +1,102 @@
 <body>
   <div id="root"></div>
-  
-  <div class="box-container"></div>
+
+
 
   <script src="https://unpkg.com/react@17.0.0/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@17.0.0/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.12.4/babel.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+
+  <!-- <script type="text/babel">
+
+    const rootElement = document.getElementById('root');
+
+    const style = {
+      lightMode: { backgroundColor: '#fff', color: '#333', margin: '3rem', padding: '3rem', textAlign: 'center' },
+      darkMode: { backgroundColor: '#333', color: '#fff', margin: '3rem', padding: '3rem', textAlign: 'center' },
+    }
+
+    const Message = ({ ...props }) => {
+      const res = <h3 className="message" style={props.style}> {props.greeting}, {props.subject}, it's been {props.dayNumbers} days that I've been here :) </h3>;
+      return res;
+    };
+
+    const hellWorld = 'Hello World';
+    const goodbyeWorld = 'Goodbye World';
+
+    const momSubject = 'Mom';
+    const dadSubject = 'Dad';
+
+    Message.propTypes = {
+      subject: PropTypes.string,
+      greeting: PropTypes.string.isRequired,
+      dayNumbers: PropTypes.number
+    }
+
+    const element = (
+      <>
+        <Message style={style.lightMode} subject={momSubject} greeting="Hello" dayNumbers={2} />
+        <Message style={style.darkMode} subject={dadSubject} greeting="Goodbye" dayNumbers={2} />
+      </>
+    );
+
+    ReactDOM.render(element, rootElement);
+  </script> -->
+
+
 
   <script type="text/babel">
 
-    
+    const rootElement = document.getElementById('root');
+
+
+    const Button = ({ ...props }) => {
+      const style = {
+        box: { border: '1px solid #333', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', margin: '5rem' },
+        boxLarge: { width: '270px', height: '270px' },
+        boxMedium: { width: '180px', height: '180px' },
+        boxSmall: { width: '90px', height: '90px' }
+      }
+
+      const customClassName = props.customClassName;
+
+      const largeButton = <button className={`btn ${customClassName}`} style={Object.assign(style.boxLarge, style.box)}> {props.children} </button>;
+      const mediumButton = <button className={`btn ${customClassName}`} style={Object.assign(style.boxMedium, style.box)}> {props.children} </button>;
+      const smallButton = <button className={`btn ${customClassName}`} style={Object.assign(style.boxSmall, style.box)}> {props.children} </button>;
+
+      const defaultBox = <button className={`btn`} style={style.box}> {props.children} </button>;
+      switch (customClassName) {
+        case 'btn--small':
+          return smallButton
+          break;
+
+        case 'btn--medium':
+          return mediumButton
+          break;
+
+        case 'btn--large':
+          return largeButton
+          break;
+
+        default:
+          console.log('defaultBox returned');
+          return defaultBox;
+      }
+
+    };
+
+    const element = (
+      <>
+        <Button children="small light blue box" />
+        <Button customClassName="btn--large" children="large btn" />
+        <Button children="large orange box" />
+      </>
+    );
+
+    ReactDOM.render(element, rootElement);
 
   </script>
+
+
 </body>
