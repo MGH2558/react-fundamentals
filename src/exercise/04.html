@@ -46,12 +46,17 @@
 
 
 
+  <!-- Styling -->
   <script type="text/babel">
-
+    // import '../box-styles.css';
+    
     const rootElement = document.getElementById('root');
 
 
-    const Button = ({ ...props }) => {
+    document.querySelector('body').style.backgroundColor = 'lightblue';
+
+    const Button = props => {
+
       const style = {
         box: { border: '1px solid #333', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', margin: '5rem' },
         boxLarge: { width: '270px', height: '270px' },
@@ -61,11 +66,16 @@
 
       const customClassName = props.customClassName;
 
-      const largeButton = <button className={`btn ${customClassName}`} style={Object.assign(style.boxLarge, style.box)}> {props.children} </button>;
-      const mediumButton = <button className={`btn ${customClassName}`} style={Object.assign(style.boxMedium, style.box)}> {props.children} </button>;
-      const smallButton = <button className={`btn ${customClassName}`} style={Object.assign(style.boxSmall, style.box)}> {props.children} </button>;
+      const setCustomStyle = boxModel => {
+        return Object.assign(boxModel, style.box);
+      }
+
+      const largeButton = <button className={`btn ${customClassName}`} style={setCustomStyle(style.boxLarge)}> {props.children} </button>;
+      const mediumButton = <button className={`btn ${customClassName}`} style={setCustomStyle(style.boxMedium)}> {props.children} </button>;
+      const smallButton = <button className={`btn ${customClassName}`} style={setCustomStyle(style.boxSmall)}> {props.children} </button>;
 
       const defaultBox = <button className={`btn`} style={style.box}> {props.children} </button>;
+
       switch (customClassName) {
         case 'btn--small':
           return smallButton
@@ -88,15 +98,15 @@
 
     const element = (
       <>
-        <Button children="small light blue box" />
-        <Button customClassName="btn--large" children="large btn" />
-        <Button children="large orange box" />
+        <Button customClassName="btn--medium" children="medium box" />
+        <Button customClassName="btn--large" children="large box" />
+        <Button customClassName="btn--small" children="small box" />
+        <Button children="sizeless box" style={{backgroundColor: 'crimson', color: '#fff', padding: '2rem', borderRadius: '1rem'}} />
       </>
     );
 
     ReactDOM.render(element, rootElement);
 
-  </script>
-
+  </script> 
 
 </body>
