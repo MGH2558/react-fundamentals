@@ -3,63 +3,45 @@
 
 import * as React from 'react'
 
-function UsernameForm({onSubmitUsername}) {
-  const firstNameEle = React.useRef()
-  const usernameEle = React.useRef()
+function UsernameForm({ onSubmitUsername }) {
 
-  const [error, setError] = React.useState(null)
+  const firstNameRef = React.useRef();
+
+  const [result, setResult] = React.useState('');
+  const [username, setUsername] = React.useState('');
 
   function handleSubmit(e) {
     e.preventDefault()
 
-    {
-      const firstName = firstNameEle.current.value
-      const username = usernameEle.current.value
-
-      onSubmitUsername(firstName, username)
-    }
+    const firstName = firstNameRef.current.value;
+    onSubmitUsername(firstName, username);
   }
 
   function handleChange(event) {
-    const {value} = event.target
-    const isLowerCase = value === value.toLowerCase()
-
-    setError(isLowerCase ? null : 'Username must be lower case!')
-    console.log(value)
+    const { value } = event.target;
+    const inpValue = value.toLowerCase();
+    setUsername(inpValue);
+    setResult(inpValue);
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="firstName">First Name:</label>
-        <input id="firstName" ref={firstNameEle} type="text" maxLength="10" />
+        <input id="firstName" ref={firstNameRef} type="text" />
       </div>
       <div>
         <label htmlFor="username">Username:</label>
-        <input
-          id="username"
-          ref={usernameEle}
-          onChange={handleChange}
-          name="username"
-          type="text"
-          maxLength="10"
-        />
+        <input id="username" onChange={handleChange} name="username" type="text" value={username} />
       </div>
-      <p style={{color: 'red', fontSize: '20'}}>{error}</p>
-      <button disabled={Boolean(error)} type="submit">
-        Submit
-      </button>
+      <h3>{result}</h3>
+      <button type="submit"> Submit </button>
     </form>
   )
 }
 
 function App() {
-  const onSubmitUsername = (firstName, username) =>
-    alert(`
-  Welcome dear ${firstName}
-  Your username is : ${username}
-  
-  `)
+  const onSubmitUsername = (firstName, username) => alert(`Welcome dear ${firstName} Your username is : ${username}`);
   return <UsernameForm onSubmitUsername={onSubmitUsername} />
 }
 
